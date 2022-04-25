@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu -o pipefail
-
+CONFIG_PATH="/home/ubuntu/xiaomi_ax3200_openwrt/build_image/files"
+FORCE_UNSAFE_CONFIGURE=1
 opt=${2:-}
 
 if [[ ${BUILD_VERBOSE:-false} == true ]]; then
@@ -39,7 +40,7 @@ else
 fi
 
 echo "Start build and log to build.log"
-make -j$(($(nproc)+1)) $MAKE_VERBOSE CONFIG_DEBUG_SECTION_MISMATCH=y 2>&1 | tee build.log
+make -j1 V=s CONFIG_DEBUG_SECTION_MISMATCH=y 2>&1 | tee build.log
 }
 
 build-rebuild () {
@@ -62,7 +63,7 @@ clean-full () {
 make distclean
 }
 
-case "$1" in
+case "build-official" in
   build-official)
     build-official
     ;;

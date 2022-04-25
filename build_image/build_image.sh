@@ -2,6 +2,8 @@
 set -eu -o pipefail
 # set -x
 
+IN_DOCKER=false
+SKIP_PULL=true
 RUN_PATH=$PWD
 SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 SCRIPT_NAME=$(basename "$0")
@@ -21,7 +23,7 @@ OPENWRT_PATH=${OPENWRT_PATH:-/tmp/openwrt}
 
 OPENWRT_GIT_URL=https://github.com/openwrt/openwrt.git
 OPENWRT_GIT_BRANCH_NAME=master
-OPENWRT_GIT_COMMIT_HASH=41be1a2de2f84f532a7eb1c11ece99811ca47ba5
+OPENWRT_GIT_COMMIT_HASH=089eb02abcd7512c6d182953560eb2453ef144ca
 OPENWRT_GIT_PATH=${OPENWRT_PATH}/upstream
 
 # OPENWRT_NAMIDAIRO_GIT_URL=https://github.com/namidairo/openwrt.git
@@ -47,8 +49,8 @@ if [[ ${SKIP_PULL:-false} == false || ! -d ${OPENWRT_GIT_PATH} ]]; then
   # inf "Apply namidairo patches to upstream repo"
   # cd "${OPENWRT_GIT_PATH}"
   # git apply "${OPENWRT_PATH}"/patchfile
-
-  git apply "${PATCH_PATH}"
+  # PATCH_PATH="$SCRIPT_PATH/files/ax3200_1ce3e53.patch"
+  # git apply "${PATCH_PATH}"
 fi
 
 inf "Add build scripts"
